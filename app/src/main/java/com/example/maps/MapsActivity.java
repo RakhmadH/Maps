@@ -17,7 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.maps.databinding.ActivityMapsBinding;
@@ -58,7 +60,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Add a marker in Sydney and move the camera
         LatLng vokasi = new LatLng(-7.774621410988136, 110.37448061108397);
-        mMap.addMarker(new MarkerOptions().position(vokasi).title("Marker in Vokasi"));
+        mMap.addMarker(new MarkerOptions().position(vokasi).title("Marker in Vokasi")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vokasi,20));
         setMapLongClick(mMap);
         setPoiClick(mMap);
@@ -89,6 +92,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             case R.id.terrain_map:
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                return true;
+            case R.id.custom_map:
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this,R.raw.mapstyle));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
